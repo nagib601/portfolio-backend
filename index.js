@@ -9,12 +9,14 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 
 // --- CORS Settings ---
-// আপনার ফ্রন্টএন্ড যখন লাইভ হবে, তখন origin-এ আপনার ফ্রন্টএন্ডের লিঙ্ক বসাবেন।
-// আপাতত '*' বা true ব্যবহার করা যায়, তবে ভার্সেলে নির্দিষ্ট লিঙ্ক দেওয়াই নিরাপদ।
 app.use(cors({
-    origin: ["http://localhost:5173", "https://your-frontend-domain.vercel.app"], 
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: [
+        "http://localhost:5173", 
+        "https://portfolio-frontend-gold-seven.vercel.app" // আপনার বর্তমান ফ্রন্টএন্ড লিঙ্ক
+    ], 
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
     optionsSuccessStatus: 200
 }));
 
@@ -27,15 +29,11 @@ let isConnected = false;
 const connectDB = async () => {
     mongoose.set('strictQuery', true);
     if (isConnected) {
-        console.log("=> Using existing database connection");
         return;
     }
 
     try {
-        const db = await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        const db = await mongoose.connect(process.env.MONGO_URI);
         isConnected = db.connections[0].readyState;
         console.log("✅ New MongoDB Connection Created");
     } catch (err) {
