@@ -1,0 +1,25 @@
+# Dependency directories
+node_modules/
+
+# Environment variables (খুবই জরুরি, যাতে পাসওয়ার্ড লিক না হয়)
+.env
+.env.local
+.env.production
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE / Editor files
+.vscode/
+.idea/
+.DS_Store
+
+# Process manager files
+pids
+*.pid
+*.seed
+*.pid.lock
